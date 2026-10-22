@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e5147">
+  <meta name="description" content="Protótipo de gestão de insumos do COREN-MA.">
+  <title>Insumos | COREN-MA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#inicio" aria-label="COREN-MA Início">
+        <span class="brand-mark">C</span><span><strong>COREN-MA</strong><small>Gestão de insumos</small></span>
+      </a>
+      <div class="nav-label">MENU PRINCIPAL</div>
+      <nav class="nav-list" aria-label="Navegação principal">
+        <a class="nav-item active" href="#inicio"><span class="nav-icon">▦</span> Visão geral</a>
+        <a class="nav-item" href="#estoque"><span class="nav-icon">▤</span> Estoque <span class="nav-count" id="nav-count">0</span></a>
+        <a class="nav-item" href="#movimentacoes"><span class="nav-icon">↕</span> Movimentações</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-card"><span class="help-icon">?</span><strong>Precisa de ajuda?</strong><p>Acesse a documentação do projeto.</p><a href="../docs/README.md">Ver documentação <span>↗</span></a></div><div class="user-chip"><span class="avatar">AD</span><span><strong>Administrador</strong><small>Gestor de estoque</small></span><span class="dots">•••</span></div></div>
+    </aside>
+    <main class="main-area" id="inicio">
+      <header class="topbar"><button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">☰</button><div class="breadcrumb">Início <span>/</span> <strong>Visão geral</strong></div><div class="top-actions"><span class="today" id="today"></span><button class="icon-button" aria-label="Notificações">♧<i></i></button><span class="avatar top-avatar">AD</span></div></header>
+      <section class="page-content">
+        <div class="welcome-row"><div><p class="eyebrow">PAINEL DE CONTROLE</p><h1>Visão geral</h1><p class="subtitle">Acompanhe os insumos e a movimentação do seu estoque.</p></div><button class="button button-primary" id="open-modal"><span>＋</span> Novo insumo</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total de insumos</span><span class="stat-icon green">▤</span></div><strong class="stat-number" id="total-items">—</strong><span class="stat-note">itens cadastrados</span></article>
+          <article class="stat-card"><div class="stat-top"><span>Estoque baixo</span><span class="stat-icon amber">⌁</span></div><strong class="stat-number" id="low-items">—</strong><span class="stat-note">abaixo do mínimo definido</span></article>
+          <article class="stat-card"><div class="stat-top"><span>Categorias</span><span class="stat-icon blue">▦</span></div><strong class="stat-number" id="category-count">—</strong><span class="stat-note">categorias ativas</span></article>
+          <article class="stat-card"><div class="stat-top"><span>Locais de estoque</span><span class="stat-icon violet">⌖</span></div><strong class="stat-number" id="location-count">—</strong><span class="stat-note">pontos de armazenamento</span></article>
+        </div>
+        <section class="inventory-card" id="estoque">
+          <div class="section-heading"><div><h2>Insumos cadastrados</h2><p>Consulte e gerencie os itens do estoque.</p></div><button class="button button-outline" id="export-button">⇩ <span>Exportar</span></button></div>
+          <div class="table-tools"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Buscar insumo, categoria..."></label><label class="filter-select"><span>Categoria:</span><select id="category-filter"><option value="">Todas</option></select></label><button class="button button-filter" id="refresh-button">↻ <span>Atualizar</span></button></div>
+          <div class="table-wrap"><table><thead><tr><th>INSUMO</th><th>CATEGORIA</th><th>QUANTIDADE</th><th>LOCALIZAÇÃO</th><th>STATUS</th><th></th></tr></thead><tbody id="inventory-body"><tr><td colspan="6" class="empty-state">Carregando insumos...</td></tr></tbody></table></div>
+          <div class="table-footer"><span id="result-count">Carregando...</span><span class="api-status"><i></i> <span id="connection-status">Conectando à API</span></span></div>
+        </section>
+        <footer class="page-footer"><span>COREN-MA · Projeto acadêmico</span><span>Gestão de insumos <b>•</b> Protótipo v1.0</span></footer>
+      </section>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="modal-backdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-heading"><div><p class="eyebrow">CADASTRO</p><h2 id="modal-title">Adicionar insumo</h2></div><button class="close-button" id="close-modal" aria-label="Fechar">×</button></div><form id="insumo-form"><label>Nome do insumo<input name="nome" required minlength="2" placeholder="Ex.: Luvas descartáveis"></label><div class="form-row"><label>Categoria<input name="categoria" required placeholder="Ex.: EPI"></label><label>Unidade<input name="unidade" required value="unidade"></label></div><div class="form-row"><label>Quantidade inicial<input name="quantidade" type="number" min="0" value="0" required></label><label>Estoque mínimo<input name="estoque_minimo" type="number" min="0" value="5" required></label></div><label>Localização<input name="localizacao" value="Almoxarifado" required></label><label>Observações<textarea name="observacoes" rows="3" placeholder="Opcional"></textarea></label><p class="form-error" id="form-error" role="alert"></p><div class="modal-actions"><button type="button" class="button button-outline" id="cancel-modal">Cancelar</button><button type="submit" class="button button-primary">Salvar insumo</button></div></form></section></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
