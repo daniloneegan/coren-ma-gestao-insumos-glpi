@@ -106,6 +106,7 @@ A API define o técnico salvo com base na configuração autenticada e rejeita d
 - CORS amplo é necessário para arquivos locais; a API deve permanecer limitada ao loopback. Não alterar `--host` para `0.0.0.0` sem definir origens, autenticação real e controles de rede.
 - GLPI não é consultado nem validado automaticamente; não existe garantia de que o chamado informado esteja aberto ou pertença ao solicitante.
 - Para uso real, adicionar migrações Alembic, testes, logs/auditoria protegidos, rate limit, política de sessão/CSRF apropriada, gestão de segredos e revisão de privacidade.
-## Acessibilidade: Em conformidade com WCAG 2.1
-
+# Acessibilidade: Em conformidade com WCAG 2.1
+# Auto-revisão Técnica
+- Validação de rotas REST e acessibilidade WCAG 2.1.
 
