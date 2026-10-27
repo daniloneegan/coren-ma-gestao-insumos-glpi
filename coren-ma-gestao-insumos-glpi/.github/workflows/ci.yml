@@ -25,5 +25,5 @@ jobs:
 
     - name: Run tests
       run: |
-        cd backend
+        cd coren-ma-gestao-insumos-glpi/backend
         pytest -v
